@@ -256,10 +256,10 @@ export default function Lab1() {
             <div>
                 <h4> Other HTML field types</h4>
                 <label htmlFor="ed-text-field-email"> Email: </label>
-                <input type="email" placeholder="haidyhere@outlook.com" id="wd-text-field-email" /><br/>
+                <input type="email" placeholder="jdoe@somewhere.com" id="wd-text-field-email" /><br/>
 
                 <label htmlFor="wd-text-fields-salary-start">Starting salary:</label>
-                <input type="number" value="100000" placeholder="10000" id="wd-text-fields-salary-start" /><br/>
+                <input type="number" value="100000" placeholder="100000" id="wd-text-fields-salary-start" /><br/>
 
                 <label htmlFor="wd-text-fields-rating"> Rating: </label>
                 <input type="range" value="4" max="5" placeholder="Doe" id="wd-text-fields-rating"/><br/>
