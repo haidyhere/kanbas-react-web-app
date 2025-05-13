@@ -21,9 +21,7 @@ export default function Labs() {
                 <Route path="Lab3/*" element={<Lab3 />} />
 
             </Routes>
-            <Lab1 />
-            <Lab2 />
-            <Lab3 />
+            
         </div>
     );
 }
