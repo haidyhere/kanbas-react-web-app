@@ -2,7 +2,7 @@
 export default function AssignmentEditor() {
     return (
         <div id="wd-assignments-editor">
-            <label htmlFor="wd-name">Assignment Name</label>
+            <label htmlFor="wd-name">Assignment Name</label><br />
             <input id="wd-name" value="A1 - ENV + HTML" /><br /><br />
             <textarea id="wd-description">
             The assignment is available online submit alink to the landing page of your Web application running on Netlify. The landing page should include the following: Your fullname and section Links to each of the lab assignments Link to the Kanbas application Links to all relevant source code repositories The Kanbas application should include a linkto navigate back to the landing page.
@@ -77,8 +77,12 @@ export default function AssignmentEditor() {
                     </td>
                     <td>
                     <br />
-                        <span>Assign to</span>
-                        <input type="text" id="wd-assign-to" value="Everyone" /> <br />
+                        <span>Assign to</span><br />
+                        <select id="wd-assign-to">
+                            <option value="Everyone" >Everyone</option>
+                            <option value="Section 1">Section 1</option>
+                            <option value="Section 2">Section 2</option>
+                        </select> <br />
                     </td>
                 </tr>
 
@@ -86,28 +90,39 @@ export default function AssignmentEditor() {
                     <td></td>
                     <td>
                         <br />
-                        <label htmlFor="wd-due-date">Due</label>
+                        <label htmlFor="wd-due-date">Due</label> <br/>
                         <input type="date" id="wd-due-date" value="2024-05-13" />
                     </td>
                 </tr>
                 
                 <tr>
                     <td></td>
-                    <td>
-                        <br />
-                        <label htmlFor="wd-available-from">Available From</label>
+                    <tr>
+                        <td>
+                            <label htmlFor="wd-available-from">Available From </label>
+                        </td>
+                        <td>
+                            <label htmlFor="wd-available-until">Until</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
                         <input type="date" id="wd-available-from" value="2024-05-06" />
-                        <label htmlFor="wd-available-until">Until</label>
+                        </td>
+                        <td>
                         <input type="date" id="wd-available-until" value="2024-05-20" />
-                    </td>
+                        </td>
+                    </tr>
+                    
                 </tr>
-
+               
                 <tr>
                     <td></td>
                     <td align="right">
                         <br />
-                        <button id="wd-name">Cancle</button>
-                        <button id="wd-name">Save</button>
+                        
+                        <button >Cancle</button>
+                        <button >Save</button>
                     
                     </td>
                 </tr>

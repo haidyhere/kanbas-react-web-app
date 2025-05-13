@@ -194,7 +194,10 @@ export default function Lab1() {
             <button type="button" onClick={() => alert("Life is Good!")} 
             id="wd-all-good">
                 Hello World!
-            </button>
+            </button><br />
+            <br/>
+
+            <button type="button">File upload</button>
             
             <div>
             <h5 id="wd-radio-buttons">Radio buttons</h5>
@@ -265,7 +268,7 @@ export default function Lab1() {
                 <input type="range" value="4" max="5" placeholder="Doe" id="wd-text-fields-rating"/><br/>
 
                 <label htmlFor="wd-text-fields-dob"> Date of birth: </label>
-                <input type="data" value="2000-01-21" id="wd-text-fields-dob"/><br/>
+                <input type="date" value="2000-01-21" id="wd-text-fields-dob"/><br/>
             </div>
 
             <div>
