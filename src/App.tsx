@@ -12,7 +12,6 @@ export default function App() {
         <Route path="/Labs/*" element={<Labs />} />
         <Route path="/Kambaz/*" element={<Kambaz />} />
       </Routes>
-      <Labs />
     </div>
     </HashRouter>
   );}
