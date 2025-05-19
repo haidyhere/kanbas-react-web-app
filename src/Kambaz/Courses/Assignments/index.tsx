@@ -8,8 +8,7 @@ export default function Assignments() {
     return (
         <div id="wd-assignments">
             {/*<InputGroup placeholder="Search for Assignments" id="wd-search-assignment" />*/}
-            <InputGroup size="lg" className="me-1 float-right" id="wd-search-assignment">  
-            
+            <InputGroup size="lg" className="me-1 float-right" id="wd-search-assignment"> 
                 <InputGroup.Text id="wd-search-assignment-icon"> 
                     <FaSearch />
                 </InputGroup.Text>
@@ -25,10 +24,11 @@ export default function Assignments() {
                 </Button>
             </InputGroup> 
             <br/><br/>
-
-            <ListGroup className="rounded-0" id="wd-assignments-title">
-                <ListGroup.Item className="assignments p-0 mb-3 fs-5 border-gray">
-                    <div className="wd-assignments p-3 ps-2 bg-secondary">
+{/*Assignment  */}
+            
+            <ListGroup className="rounded-0" id="wd-assignments-group">
+                <ListGroup.Item className="assignments p-0 mb-0 fs-5 border-gray">
+                    <div className="wd-title p-3 ps-2 bg-secondary">
                         <BsGripVertical className="me-2 fs-3" />ASSIGNMENTS<ModuleControlButtons />
                         <span className="me-1 float-end" id="wd-add-assignment-group"> 
                             40% of Total 
@@ -37,50 +37,51 @@ export default function Assignments() {
                     </div>
                 </ListGroup.Item>
 
-                <ListGroup className="wd-assignment-list-item rounded-0" id="wd-assignment-list">
-                    <ListGroup.Item className="wd-assignment-list-item p-3 ps-2 border-start d-flex align-items-center mb-0">
+                
+                    <ListGroup.Item className="wd-assignment-list-item p-3 ps-2 d-flex align-items-center mb-0 wd-assignment-group">
                         <div className="d-flex me-3">
                             <BsGripVertical className="me-2 fs-4" />
-                            <LuNotebookPen className="fs-4"/>   
+                            <LuNotebookPen className="fs-4 text-success"/>   
                         </div>
                         <div>
-                            <div className="fw-bold fs-5 mb-1">
-                                <a href="#/Kambaz/Courses/1234/Assignments/123" className="wd-assignment-link d-block mb-0"> A1</a>
+                            <div className="fw-bold mb-0">
+                                <a href="#/Kambaz/Courses/1234/Assignments/123" className="wd-assignment-link d-block mb-0 text-dark"> A1</a>
                             </div>
-                            <div className="fs-6">
-                                Multiple Modules | <b>Not available unitil</b> May 6 at 12:am | <b>Due</b> May 13 at 11:59pm | 100pts 
+                            <div className="fs-6 text-danger">
+                                Multiple Modules <span className="text-dark">| <b>Not available unitil</b> May 6 at 12:am | <b>Due</b> May 13 at 11:59pm | 100pts </span>
                             </div></div>
                         <div className="ms-auto"><ModuleControlButtons /></div>
                         
                     </ListGroup.Item>
 
-                    <ListGroup.Item className="wd-assignment-list-item p-3 ps-2 border-start d-flex align-items-center mb-0">
+                    <ListGroup.Item className="wd-assignment-list-item p-3 ps-2 d-flex align-items-center mb-0 wd-assignment-group">
                         <div className="d-flex me-3">
                             <BsGripVertical className="me-2 fs-4" />
-                            <LuNotebookPen className="fs-4"/>   
+                            <LuNotebookPen className="fs-4 text-success"/>   
                         </div>
                         <div>
-                            <div className="fw-bold fs-5 mb-1">
-                                <a href="#/Kambaz/Courses/1234/Assignments/123" className="wd-assignment-link d-block mb-0"> A2</a>
+                            <div className="fw-bold mb-0">
+                                <a href="#/Kambaz/Courses/1234/Assignments/123" className="wd-assignment-link d-block mb-0 text-dark"> A2</a>
                             </div>
-                            <div className="fs-6">
-                                Multiple Modules | <b>Not available unitil</b> May 6 at 12:am | <b>Due</b> May 13 at 11:59pm | 100pts 
+                            <div className="fs-6 text-danger">
+                                Multiple Modules <span className="text-dark">| <b>Not available unitil</b> May 6 at 12:am | <b>Due</b> May 13 at 11:59pm | 100pts </span>
                             </div>
                         </div>
                         <div className="ms-auto"><ModuleControlButtons /></div>
                         
                     </ListGroup.Item>
-                    <ListGroup.Item className="wd-assignment-list-item p-3 ps-2 border-start d-flex align-items-center mb-5">
+
+                    <ListGroup.Item className="wd-assignment-list-item p-3 ps-2 d-flex align-items-center mb-3 wd-assignment-group">
                         <div className="d-flex me-3">
                             <BsGripVertical className="me-2 fs-4" />
-                            <LuNotebookPen className="fs-4"/>   
+                            <LuNotebookPen className="fs-4 text-success"/>   
                         </div>
                         <div>
-                            <div className="fw-bold fs-5 mb-1">
-                                <a href="#/Kambaz/Courses/1234/Assignments/123" className="wd-assignment-link d-block mb-1"> A3</a>
+                            <div className="fw-bold mb-0">
+                                <a href="#/Kambaz/Courses/1234/Assignments/123" className="wd-assignment-link d-block mb-0 text-dark"> A3</a>
                             </div>
-                            <div className="fs-6">
-                                Multiple Modules | <b>Not available unitil</b> May 6 at 12:am | <b>Due</b> May 13 at 11:59pm | 100pts 
+                            <div className="fs-6 text-danger">
+                                Multiple Modules <span className="text-dark">| <b>Not available unitil</b> May 6 at 12:am | <b>Due</b> May 13 at 11:59pm | 100pts </span>
                             </div>        
                         </div>
                         <div className="ms-auto"><ModuleControlButtons /></div>
@@ -88,14 +89,13 @@ export default function Assignments() {
                     </ListGroup.Item>
  
                                
-                </ListGroup>
-
             </ListGroup>
+            
                 
-            <ListGroup className="rounded-0" id="wd-assignments-projects">
+            <ListGroup className="rounded-0 mt-4" id="wd-assignments-projects">
                 <ListGroup.Item className="wd-assignments p-0 mb-5 fs-5 border-gray">
                     <div className="wd-title p-3 ps-2 bg-secondary">
-                        <BsGripVertical className="me-2 fs-3" />PROGECTS<ModuleControlButtons />
+                        <BsGripVertical className="me-2 fs-3" />PROJECTS<ModuleControlButtons />
                         <span className="me-1 float-end" id="wd-add-assignment-group"> 
                             30% of Total 
                             <FaPlus className="position-relative me-2" style={{ bottom: "1px" }} /> 
@@ -119,7 +119,7 @@ export default function Assignments() {
             <ListGroup className="rounded-0" id="wd-assignments-exams">
                 <ListGroup.Item className="wd-assignments p-0 mb-5 fs-5 border-gray">
                     <div className="wd-title p-3 ps-2 bg-secondary">
-                        <BsGripVertical className="me-2 fs-3" />QUIZES<ModuleControlButtons />
+                        <BsGripVertical className="me-2 fs-3" />QUIZZES<ModuleControlButtons />
                         <span className="me-1 float-end" id="wd-add-assignment-group"> 
                             15% of Total 
                             <FaPlus className="position-relative me-2" style={{ bottom: "1px" }} /> 
