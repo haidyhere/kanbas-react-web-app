@@ -1,34 +1,135 @@
+import { Button, FormControl, InputGroup, ListGroup } from "react-bootstrap";
+import { BsGripVertical } from "react-icons/bs";
+import { FaPlus, FaSearch } from "react-icons/fa";
+import ModuleControlButtons from "./ModuleControlButtons";
+import { LuNotebookPen } from "react-icons/lu";
 
 export default function Assignments() {
     return (
         <div id="wd-assignments">
-            <input placeholder="Search for Assignments" id="wd-search-assignment" />
-            <button id="wd-add-assignment-group">+ Group</button>
-            <button id="wd-add-assignment">+ Assignment</button>
-            <h3 id="wd-assignments-title"> ASSIGNMENTS 40% of Total <button>+</button> </h3>
-            <ul id="wd-assignment-list">
-                <li className="wd-assignment-list-item">
-                <a href="#/Kambaz/Courses/1234/Assignments/123" className="wd-assignment-link" >A1 - ENV + HTML
-                </a> 
-                <p>Multiple Modules | <b>Not available unitil</b> May 6 at 12:am | <b>Due</b> May 13 at 11:59pm | 100pts</p>
-                </li>
-                <li className="wd-assignment-list-item">
-                <a href="#/Kambaz/Courses/1234/Assignments/123" className="wd-assignment-link" >A2 - CSS + BOOTSTRAP
-                </a>
-                <p>Multiple Modules | <b>Not available unitil</b> May 13 at 12:am | <b>Due</b> May 20 at 11:59pm | 100pts</p>
-                </li>
-                <li className="wd-assignment-list-item">
-                <a href="#/Kambaz/Courses/1234/Assignments/123" className="wd-assignment-link" >A3 - JAVASCRIPT + REACT
-                </a>
-                <p>Multiple Modules | <b>Not available unitil</b> May 20 at 12:am | <b>Due</b> May 27 at 11:59pm | 100pts</p>
-                </li>
+            {/*<InputGroup placeholder="Search for Assignments" id="wd-search-assignment" />*/}
+            <InputGroup size="lg" className="me-1 float-right" id="wd-search-assignment">  
+            
+                <InputGroup.Text id="wd-search-assignment-icon"> 
+                    <FaSearch />
+                </InputGroup.Text>
+                <FormControl placeholder="Search for Assignments" /> 
+        
+                <Button variant="secondary" size="lg" className="me-1 float-end" id="wd-add-assignment-group"> 
+                    <FaPlus className="position-relative me-2" style={{ bottom: "1px" }} /> 
+                    Group 
+                </Button>
+                <Button variant="danger" size="lg" className="me-1 float-end" id="wd-add-assignment"> 
+                    <FaPlus className="position-relative me-2" style={{ bottom: "1px" }} /> 
+                    Assignment 
+                </Button>
+            </InputGroup> 
+            <br/><br/>
 
-            </ul>
-            <h3 id="wd-assignments-projects"> PROGECTS 30% of Total</h3> <br/>
+            <ListGroup className="rounded-0" id="wd-assignments-title">
+                <ListGroup.Item className="assignments p-0 mb-3 fs-5 border-gray">
+                    <div className="wd-assignments p-3 ps-2 bg-secondary">
+                        <BsGripVertical className="me-2 fs-3" />ASSIGNMENTS<ModuleControlButtons />
+                        <span className="me-1 float-end" id="wd-add-assignment-group"> 
+                            40% of Total 
+                            <FaPlus className="position-relative me-2" style={{ bottom: "1px" }} /> 
+                        </span>
+                    </div>
+                </ListGroup.Item>
 
-            <h3 id="wd-assignments-exams"> EXAMS 15% of Total</h3> <br/>
+                <ListGroup className="wd-assignment-list-item rounded-0" id="wd-assignment-list">
+                    <ListGroup.Item className="wd-assignment-list-item p-3 ps-2 border-start d-flex align-items-center mb-0">
+                        <div className="d-flex me-3">
+                            <BsGripVertical className="me-2 fs-4" />
+                            <LuNotebookPen className="fs-4"/>   
+                        </div>
+                        <div>
+                            <div className="fw-bold fs-5 mb-1">
+                                <a href="#/Kambaz/Courses/1234/Assignments/123" className="wd-assignment-link d-block mb-0"> A1</a>
+                            </div>
+                            <div className="fs-6">
+                                Multiple Modules | <b>Not available unitil</b> May 6 at 12:am | <b>Due</b> May 13 at 11:59pm | 100pts 
+                            </div></div>
+                        <div className="ms-auto"><ModuleControlButtons /></div>
+                        
+                    </ListGroup.Item>
 
-            <h3 id="wd-assignments-quizes"> QUIZES 15% of Total</h3> <br/>
+                    <ListGroup.Item className="wd-assignment-list-item p-3 ps-2 border-start d-flex align-items-center mb-0">
+                        <div className="d-flex me-3">
+                            <BsGripVertical className="me-2 fs-4" />
+                            <LuNotebookPen className="fs-4"/>   
+                        </div>
+                        <div>
+                            <div className="fw-bold fs-5 mb-1">
+                                <a href="#/Kambaz/Courses/1234/Assignments/123" className="wd-assignment-link d-block mb-0"> A2</a>
+                            </div>
+                            <div className="fs-6">
+                                Multiple Modules | <b>Not available unitil</b> May 6 at 12:am | <b>Due</b> May 13 at 11:59pm | 100pts 
+                            </div>
+                        </div>
+                        <div className="ms-auto"><ModuleControlButtons /></div>
+                        
+                    </ListGroup.Item>
+                    <ListGroup.Item className="wd-assignment-list-item p-3 ps-2 border-start d-flex align-items-center mb-5">
+                        <div className="d-flex me-3">
+                            <BsGripVertical className="me-2 fs-4" />
+                            <LuNotebookPen className="fs-4"/>   
+                        </div>
+                        <div>
+                            <div className="fw-bold fs-5 mb-1">
+                                <a href="#/Kambaz/Courses/1234/Assignments/123" className="wd-assignment-link d-block mb-1"> A3</a>
+                            </div>
+                            <div className="fs-6">
+                                Multiple Modules | <b>Not available unitil</b> May 6 at 12:am | <b>Due</b> May 13 at 11:59pm | 100pts 
+                            </div>        
+                        </div>
+                        <div className="ms-auto"><ModuleControlButtons /></div>
+                                
+                    </ListGroup.Item>
+ 
+                               
+                </ListGroup>
+
+            </ListGroup>
+                
+            <ListGroup className="rounded-0" id="wd-assignments-projects">
+                <ListGroup.Item className="wd-assignments p-0 mb-5 fs-5 border-gray">
+                    <div className="wd-title p-3 ps-2 bg-secondary">
+                        <BsGripVertical className="me-2 fs-3" />PROGECTS<ModuleControlButtons />
+                        <span className="me-1 float-end" id="wd-add-assignment-group"> 
+                            30% of Total 
+                            <FaPlus className="position-relative me-2" style={{ bottom: "1px" }} /> 
+                        </span>
+                    </div>
+                </ListGroup.Item>
+            </ListGroup>  
+            
+            <ListGroup className="rounded-0" id="wd-assignments-exams">
+                <ListGroup.Item className="wd-assignments p-0 mb-5 fs-5 border-gray">
+                    <div className="wd-title p-3 ps-2 bg-secondary">
+                        <BsGripVertical className="me-2 fs-3" />EXAMS<ModuleControlButtons />
+                        <span className="me-1 float-end" id="wd-add-assignment-group"> 
+                            15% of Total 
+                            <FaPlus className="position-relative me-2" style={{ bottom: "1px" }} /> 
+                        </span>
+                    </div>
+                </ListGroup.Item>
+            </ListGroup> 
+
+            <ListGroup className="rounded-0" id="wd-assignments-exams">
+                <ListGroup.Item className="wd-assignments p-0 mb-5 fs-5 border-gray">
+                    <div className="wd-title p-3 ps-2 bg-secondary">
+                        <BsGripVertical className="me-2 fs-3" />QUIZES<ModuleControlButtons />
+                        <span className="me-1 float-end" id="wd-add-assignment-group"> 
+                            15% of Total 
+                            <FaPlus className="position-relative me-2" style={{ bottom: "1px" }} /> 
+                        </span>
+                    </div>
+                </ListGroup.Item>
+            </ListGroup> 
+            
+            
+        
         </div>
     );
 }

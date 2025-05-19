@@ -12,11 +12,19 @@ import Padding from "./Padding";
 import Positions from "./Positions";
 import ReactIconsSampler from "./ReactIcons";
 import Zindex from "./Zindex";
+import "./index.css";
+import { Container } from "react-bootstrap";
+import BootstrapGrids from "./BootstrapGrids";
+import ScreenSizeLabel from "./ScreenSizeLabel";
+import BootstrapTable from "./BootstrapTables";
+import BootstrapLists from "./BootstrapLists";
+import BootstrapForms from "./BootstrapForms";
+import BootstrapNavigation from "./BootstrapNavigation";
 
 
 export default function Lab2() {
     return (
-        <div id="wd-lab2">
+        <Container>
             <h2>Lab 2 - Cascading Style Sheets</h2>
             <p>Welcome to Lab2!</p>
             
@@ -79,8 +87,14 @@ export default function Lab2() {
             <Flex />
             <ReactIconsSampler />
 
+            <BootstrapGrids />
+            <ScreenSizeLabel />
+            <BootstrapTable /><br />
+            <BootstrapLists /><br />
+            <BootstrapForms /><br />
+            <BootstrapNavigation /><br />
 
 
-        </div>
+        </Container>
     );
 }
