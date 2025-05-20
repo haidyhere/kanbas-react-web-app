@@ -1,4 +1,4 @@
-import { Form, FormSelect } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 export default function Profile() {
