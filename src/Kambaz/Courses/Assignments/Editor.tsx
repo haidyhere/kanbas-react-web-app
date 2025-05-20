@@ -1,4 +1,4 @@
-import { Button, Col, Form, Row } from "react-bootstrap";
+import { Button, Card, Col, Form, Row } from "react-bootstrap";
 
 export default function AssignmentEditor() {
     return (
@@ -52,16 +52,19 @@ The Kanbas application should include a link to navigate back to the landing pag
             <Form.Group as={Row} className="mb-3" controlId="wd-submission-type">
                 <Form.Label column sm={2}>Submission Type</Form.Label>
                 <Col sm={10}>
+                    <Card className="p-3">
                     <Form.Select defaultValue="Online">
                         <option value="Online">Online</option>
                     </Form.Select>
-                    <Form.Label>Online Entry Options</Form.Label>
+                    <br/>
+                    <Card.Title as="h6" className="mb-3">Online Entry Options</Card.Title>
                     <Form.Check type="checkbox" id="wd-text-entry" label="Text Entry" />
                     <Form.Check type="checkbox" id="wd-website-url" label="Website URL"/>
                     <Form.Check type="checkbox" id="wd-media-recordings" label="Media Recordings" />
                     <Form.Check type="checkbox" id="wd-student-annotation" label="Student Annotation" />
                     <Form.Check type="checkbox" id="wd-file-upload" label="File Uploads" />
                     <hr />
+                </Card>
                 </Col>
                 
             </Form.Group>
@@ -69,6 +72,7 @@ The Kanbas application should include a link to navigate back to the landing pag
             <Form.Group as={Row} className="mb-3" controlId="wd-assign-to">
                 <Form.Label column sm={2}>Assign</Form.Label>
                 <Col sm={10}>
+                <Card className="p-3">
                     <Form.Label>Assign to</Form.Label>
                     <Form.Select defaultValue="Everyone" className="mb-3">
                         <option value="Everyone" >Everyone</option>
@@ -92,11 +96,12 @@ The Kanbas application should include a link to navigate back to the landing pag
                     </Row>
                     
                     <hr />
+                    </Card>
                 </Col>
             </Form.Group>
 
             <div className="d-flex justify-content-end mt-4">
-                <Button variant="secondary" className="me-2">Cancle</Button>
+                <Button variant="secondary" className="me-2">Cancel</Button>
                 <Button variant="danger">Save</Button>
             </div>
      

@@ -3,7 +3,7 @@ import { ListGroup } from "react-bootstrap";
 import { BsGripVertical } from "react-icons/bs";
 import ModulesControls from "./ModulesControls";
 import LessonControlButtons from "./LessonControlButtons";
-import ModuleControlButtons from "./ModuleControlButtons";
+import { FaPlus } from "react-icons/fa";
 
 export  default function Modules() {
     return (
@@ -23,7 +23,7 @@ export  default function Modules() {
             <ListGroup className="rounded-0" id="wd-modules">
                 <ListGroup.Item className="wd-module p-0 mb-5 fs-5 border-gray">
                     <div className="wd-title p-3 ps-2 bg-secondary">
-                        <BsGripVertical className="me-2 fs-3" />Week 1<ModuleControlButtons />
+                        <BsGripVertical className="me-2 fs-3" />Week 1 <FaPlus className="position-relative me-2 float-end" />
                     </div>
                     <ListGroup className="wd-lessons rounded-0">
                         <ListGroup.Item className="wd-lesson p-3 ps-1">
@@ -39,22 +39,24 @@ export  default function Modules() {
                 </ListGroup.Item>
 
                 <ListGroup.Item className="wd-module p-0 mb-5 fs-5 border-gray">
-                    <div className="wd-title p-3 ps-2 bg-secondary">Week 2</div>
+                    <div className="wd-title p-3 ps-2 bg-secondary">
+                        <BsGripVertical className="me-2 fs-3" />Week 2 <FaPlus className="position-relative me-2 float-end" /></div>
                     <ListGroup className="wd-lessons rounded-0">
                         <ListGroup.Item className="wd-lesson p-3 ps-1">
-                            LESSON 1 </ListGroup.Item>
+                            <BsGripVertical className="me-2 fs-3" />LESSON 1 <LessonControlButtons /></ListGroup.Item>
                         <ListGroup.Item className="wd-lesson p-3 ps-1">
-                            LESSON 2</ListGroup.Item>
+                            <BsGripVertical className="me-2 fs-3" />LESSON 2<LessonControlButtons /></ListGroup.Item>
                     </ListGroup>
                 </ListGroup.Item>
                 
                 <ListGroup.Item className="wd-module p-0 mb-5 fs-5 border-gray">
-                    <div className="wd-title p-3 ps-2 bg-secondary">Week 3</div>
+                    <div className="wd-title p-3 ps-2 bg-secondary">
+                        <BsGripVertical className="me-2 fs-3" />Week 3 <FaPlus className="position-relative me-2 float-end" /></div>
                     <ListGroup className="wd-lessons rounded-0">
                         <ListGroup.Item className="wd-lesson p-3 ps-1">
-                            LESSON 1 </ListGroup.Item>
+                            <BsGripVertical className="me-2 fs-3" />LESSON 1 <LessonControlButtons /></ListGroup.Item>
                         <ListGroup.Item className="wd-lesson p-3 ps-1">
-                            LESSON 2</ListGroup.Item>
+                            <BsGripVertical className="me-2 fs-3" />LESSON 2<LessonControlButtons /></ListGroup.Item>
                     </ListGroup>
                 </ListGroup.Item>
 
