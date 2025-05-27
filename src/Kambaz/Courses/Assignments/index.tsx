@@ -9,6 +9,16 @@ import { useParams, Link } from "react-router";
 export default function Assignments() {
     const { cid } = useParams();
     const assignments = db.assignments.filter((assignment) => assignment.course === cid);
+    const formatDate = (dateString: string | number | Date, isAvailable = false) => {
+        const date = new Date(dateString);
+        const monthNames = ["January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December"];
+        const month = monthNames[date.getMonth()];
+        const day = date.getDate();
+        const year = date.getFullYear();
+        const time = isAvailable ? "12:00 AM" : "11:59 PM";
+        return `${month} ${day}, ${year} at ${time}`;
+    }
 
     return (
         <div id="wd-assignments">
@@ -55,7 +65,7 @@ export default function Assignments() {
                                 {assignment._id}</Link>
                             </div>
                             <div className="fs-6 text-danger">
-                                Multiple Modules <span className="text-dark">| <b>Not available unitil</b> May 6 at 12:am | <b>Due</b> May 13 at 11:59pm | 100pts </span>
+                                Multiple Modules <span className="text-dark">| <b>Not available until</b> {formatDate(assignment.notAvailable, true)} | <b>Due</b> {formatDate(assignment.dueDate)} | {assignment.points}pts </span>
                             </div></div>
                         <div className="ms-auto"><ModuleControlButtons /></div>
                         

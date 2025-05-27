@@ -7,9 +7,6 @@ export default function AssignmentEditor() {
     const { aid } = useParams();
     const assignment = db.assignments.find((a) => a.course === cid && a._id === aid);
     
-    const points = 100;
-    
-    
     return (
         <Form id="wd-assignments-editor" className="p-4">
             <Form.Group className="mb-3" controlId="wd-name">
@@ -19,20 +16,13 @@ export default function AssignmentEditor() {
             <Form.Group className="mb-3" controlId="wd-description"> 
                 <Form.Label>Description</Form.Label> 
                 <Form.Control as="textarea" rows={6} 
-                value="The assignment is available online
-submit a link to the landing page of your Web application running on Netlify. 
-The landing page should include the following: 
-    • Your full name and section 
-    • Links to each of the lab assignments 
-    • Link to the Kanbas application 
-    • Links to all relevant source code repositories 
-The Kanbas application should include a link to navigate back to the landing page." /> 
+                value={assignment ? assignment.description: ""} /> 
             </Form.Group> 
 
             <Form.Group as={Row} className="mb-3" controlId="wd-points">
                 <Form.Label column sm={2}>Points</Form.Label>
                 <Col sm={10}>
-                    <Form.Control type="number" value={points} />
+                    <Form.Control type="number" value={assignment?assignment.points : 100} />
                 </Col>
             </Form.Group>
 
@@ -90,16 +80,16 @@ The Kanbas application should include a link to navigate back to the landing pag
                     </Form.Select>
                     <Form.Group className="mb-3" controlId="wd-due-date">
                         <Form.Label>Due</Form.Label>
-                        <Form.Control type="date" defaultValue="2024-05-13" />
+                        <Form.Control type="date" value={assignment ? assignment.dueDate: "2025-05-13" } />
                     </Form.Group>
                     <Row>
                         <Col>
                         <Form.Group className="mb-3" controlId="wd-available-from">Available From</Form.Group>
-                        <Form.Control type="date" defaultValue="2024-05-06" />
+                        <Form.Control type="date" value={assignment ? assignment.notAvailable : ""} />
                         </Col>
                         <Col>
                         <Form.Group className="mb-3" controlId="wd-available-until">Until</Form.Group>
-                        <Form.Control type="date" defaultValue="2024-05-20" />
+                        <Form.Control type="date" value={assignment ? assignment.dueDate: "" } />
                         </Col>
                         
                     </Row>
