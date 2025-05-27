@@ -80,7 +80,7 @@ export default function AssignmentEditor() {
                     </Form.Select>
                     <Form.Group className="mb-3" controlId="wd-due-date">
                         <Form.Label>Due</Form.Label>
-                        <Form.Control type="date" value={assignment ? assignment.dueDate: "2025-05-13" } />
+                        <Form.Control type="date" value={assignment ? assignment.dueDate: "" } />
                     </Form.Group>
                     <Row>
                         <Col>
