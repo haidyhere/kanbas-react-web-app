@@ -1,14 +1,23 @@
 import { Button, Card, Col, Form, Row } from "react-bootstrap";
+import * as db from "../../Database"
+import { useParams, Link } from "react-router";
 
 export default function AssignmentEditor() {
+    const { cid } = useParams();
+    const { aid } = useParams();
+    const assignment = db.assignments.find((a) => a.course === cid && a._id === aid);
+    
+    const points = 100;
+    
+    
     return (
         <Form id="wd-assignments-editor" className="p-4">
             <Form.Group className="mb-3" controlId="wd-name">
                 <Form.Label htmlFor="wd-name">Assignment Name</Form.Label>
-                <Form.Control type="text" value="A1" />
+                <Form.Control type="text" value={assignment ? assignment.title: ""} />
             </Form.Group>
             <Form.Group className="mb-3" controlId="wd-description"> 
-                <Form.Label></Form.Label> 
+                <Form.Label>Description</Form.Label> 
                 <Form.Control as="textarea" rows={6} 
                 value="The assignment is available online
 submit a link to the landing page of your Web application running on Netlify. 
@@ -23,7 +32,7 @@ The Kanbas application should include a link to navigate back to the landing pag
             <Form.Group as={Row} className="mb-3" controlId="wd-points">
                 <Form.Label column sm={2}>Points</Form.Label>
                 <Col sm={10}>
-                    <Form.Control type="number" value="100" />
+                    <Form.Control type="number" value={points} />
                 </Col>
             </Form.Group>
 
@@ -101,8 +110,13 @@ The Kanbas application should include a link to navigate back to the landing pag
             </Form.Group>
 
             <div className="d-flex justify-content-end mt-4">
+                
+                <Link to={`/Kambaz/Courses/${cid}/Assignments`}>
                 <Button variant="secondary" className="me-2">Cancel</Button>
+                </Link>
+                <Link to={`/Kambaz/Courses/${cid}/Assignments`}>
                 <Button variant="danger">Save</Button>
+                </Link>
             </div>
      
         </Form>

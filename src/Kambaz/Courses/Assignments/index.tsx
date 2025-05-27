@@ -3,8 +3,13 @@ import { BsGripVertical } from "react-icons/bs";
 import { FaPlus, FaSearch } from "react-icons/fa";
 import ModuleControlButtons from "./ModuleControlButtons";
 import { LuNotebookPen } from "react-icons/lu";
+import * as db from "../../Database";
+import { useParams, Link } from "react-router";
 
 export default function Assignments() {
+    const { cid } = useParams();
+    const assignments = db.assignments.filter((assignment) => assignment.course === cid);
+
     return (
         <div id="wd-assignments">
             {/*<InputGroup placeholder="Search for Assignments" id="wd-search-assignment" />*/}
@@ -30,22 +35,24 @@ export default function Assignments() {
                 <ListGroup.Item className="assignments p-0 mb-0 fs-5 border-gray">
                     <div className="wd-title p-3 ps-2 bg-secondary">
                         <BsGripVertical className="me-2 fs-3" />ASSIGNMENTS<ModuleControlButtons />
-                        <span className="me-1 float-end" id="wd-add-assignment-group"> 
-                            40% of Total 
+                        <span className="me-1 float-end d-flex align-items-center" id="wd-add-assignment-group"> 
+                            <span className="border rounded-pill px-2 py-1 me-2">
+                            40% of Total </span>
                             <FaPlus className="position-relative me-2" style={{ bottom: "1px" }} /> 
                         </span>
                     </div>
                 </ListGroup.Item>
 
-                
-                    <ListGroup.Item className="wd-assignment-list-item p-3 ps-2 d-flex align-items-center mb-0 wd-assignment-group">
+                {assignments.map((assignment) => (
+                    <ListGroup.Item key={assignment._id} className="wd-assignment-list-item p-3 ps-2 d-flex align-items-center mb-0 wd-assignment-group">
                         <div className="d-flex me-3">
                             <BsGripVertical className="me-2 fs-4" />
                             <LuNotebookPen className="fs-4 text-success"/>   
                         </div>
                         <div>
                             <div className="fw-bold mb-0">
-                                <a href="#/Kambaz/Courses/1234/Assignments/123" className="wd-assignment-link d-block mb-0 text-dark"> A1</a>
+                                <Link to={`/Kambaz/Courses/${cid}/Assignments/${assignment._id}`} className="wd-assignment-link d-block mb-0 text-dark"> 
+                                {assignment.title}</Link>
                             </div>
                             <div className="fs-6 text-danger">
                                 Multiple Modules <span className="text-dark">| <b>Not available unitil</b> May 6 at 12:am | <b>Due</b> May 13 at 11:59pm | 100pts </span>
@@ -53,42 +60,8 @@ export default function Assignments() {
                         <div className="ms-auto"><ModuleControlButtons /></div>
                         
                     </ListGroup.Item>
-
-                    <ListGroup.Item className="wd-assignment-list-item p-3 ps-2 d-flex align-items-center mb-0 wd-assignment-group">
-                        <div className="d-flex me-3">
-                            <BsGripVertical className="me-2 fs-4" />
-                            <LuNotebookPen className="fs-4 text-success"/>   
-                        </div>
-                        <div>
-                            <div className="fw-bold mb-0">
-                                <a href="#/Kambaz/Courses/1234/Assignments/123" className="wd-assignment-link d-block mb-0 text-dark"> A2</a>
-                            </div>
-                            <div className="fs-6 text-danger">
-                                Multiple Modules <span className="text-dark">| <b>Not available unitil</b> May 6 at 12:am | <b>Due</b> May 13 at 11:59pm | 100pts </span>
-                            </div>
-                        </div>
-                        <div className="ms-auto"><ModuleControlButtons /></div>
-                        
-                    </ListGroup.Item>
-
-                    <ListGroup.Item className="wd-assignment-list-item p-3 ps-2 d-flex align-items-center mb-3 wd-assignment-group">
-                        <div className="d-flex me-3">
-                            <BsGripVertical className="me-2 fs-4" />
-                            <LuNotebookPen className="fs-4 text-success"/>   
-                        </div>
-                        <div>
-                            <div className="fw-bold mb-0">
-                                <a href="#/Kambaz/Courses/1234/Assignments/123" className="wd-assignment-link d-block mb-0 text-dark"> A3</a>
-                            </div>
-                            <div className="fs-6 text-danger">
-                                Multiple Modules <span className="text-dark">| <b>Not available unitil</b> May 6 at 12:am | <b>Due</b> May 13 at 11:59pm | 100pts </span>
-                            </div>        
-                        </div>
-                        <div className="ms-auto"><ModuleControlButtons /></div>
-                                
-                    </ListGroup.Item>
- 
-                               
+                ))}
+             
             </ListGroup>
             
                 
