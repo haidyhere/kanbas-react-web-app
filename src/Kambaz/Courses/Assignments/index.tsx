@@ -52,7 +52,7 @@ export default function Assignments() {
                         <div>
                             <div className="fw-bold mb-0">
                                 <Link to={`/Kambaz/Courses/${cid}/Assignments/${assignment._id}`} className="wd-assignment-link d-block mb-0 text-dark"> 
-                                {assignment.title}</Link>
+                                {assignment._id}</Link>
                             </div>
                             <div className="fs-6 text-danger">
                                 Multiple Modules <span className="text-dark">| <b>Not available unitil</b> May 6 at 12:am | <b>Due</b> May 13 at 11:59pm | 100pts </span>
