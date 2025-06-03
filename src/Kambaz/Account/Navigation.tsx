@@ -1,21 +1,44 @@
 import { ListGroup } from "react-bootstrap";
-import { Link  } from "react-router-dom";
-//import { useSelector } from "react-redux";
+import { Link, useLocation  } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 
 export default function AccountNavigation() {
-    //const { currentUser } = useSelector((state: any) => state.accountReducer);
-    //const links = currentUser ? ["Profile"]: ["Signin", "Signup"];
-    //const { pathname } = useLocation();
+    const { currentUser } = useSelector((state: any) => state.accountReducer);
+    const links = currentUser ? ["Profile"]: ["Signin", "Signup"];
+    const { pathname } = useLocation();
 
     return (
         <ListGroup id="wd-account-navigation" style={{ width: 120 }} className="rounded-0 bottom-0 top-0 d-none d-md-block bg-black z-2 list-group">
+            {links.map((link) => (
+                <ListGroup.Item 
+                    key={link}
+                    to={`/Kambaz/Account/${link}`} 
+                    as={Link} 
+                    className={`text-center border-0 ${
+                        pathname.includes(`/Account/${link}`) 
+                            ? 'text-danger' 
+                            : 'bg-white text-black'
+                    }`}
+                    style={{ 
+                        borderLeft: pathname.includes(`/Account/${link}`) 
+                            ? "3px solid red" 
+                            : "3px solid black" 
+                    }}
+                    action
+                >
+                    {link === "Signin" ? "Sign In" : link === "Signup" ? "Sign Up" : link}
+                </ListGroup.Item>
+            ))}
+        </ListGroup>
+                
+            /*
             <ListGroup.Item to={`/Kambaz/Account/Signin`} as={Link} className="text-center border-0 bg-white text-black" style={{ borderLeft: "3px solid black !important" }} action> 
                 Signin</ListGroup.Item>
             <ListGroup.Item to={`/Kambaz/Account/Signup`} as={Link} className="text-center border-0 bg-white text-danger"> Signup </ListGroup.Item>
             <ListGroup.Item to={`/Kambaz/Account/Profile`} as={Link} className="text-center border-0 bg-white text-danger"> Profile </ListGroup.Item>
         </ListGroup>
-            
+            */
         
     );
 }
