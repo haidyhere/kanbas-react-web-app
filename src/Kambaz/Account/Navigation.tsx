@@ -1,13 +1,12 @@
 import { ListGroup } from "react-bootstrap";
-import { Link, useLocation  } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { Link  } from "react-router-dom";
+//import { useSelector } from "react-redux";
 
 
 export default function AccountNavigation() {
-    const { currentUser } = useSelector((state: any) => state.accountReducer);
-    const links = currentUser ? ["Profile"]: 
-                                ["Signin", "Signup"];
-    const { pathname } = useLocation();
+    //const { currentUser } = useSelector((state: any) => state.accountReducer);
+    //const links = currentUser ? ["Profile"]: ["Signin", "Signup"];
+    //const { pathname } = useLocation();
 
     return (
         <ListGroup id="wd-account-navigation" style={{ width: 120 }} className="rounded-0 bottom-0 top-0 d-none d-md-block bg-black z-2 list-group">

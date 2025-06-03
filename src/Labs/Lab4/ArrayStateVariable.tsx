@@ -9,7 +9,7 @@ export default function ArrayStateVariable() {
     };
     const deleteElement = (index: number) => {
         setArray(
-        array.filter((item, i) => i !== index));
+        array.filter((i) => i !== index));
     };
     return (
         <div id="wd-array-state-variables">
