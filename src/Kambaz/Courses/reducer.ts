@@ -44,7 +44,7 @@ import { courses } from "../Database";
                             : c ) as any;
         },
         setCourse: (state, { payload: course}) => {
-            state.courses = course;
+            state.currentCourse = course;
         },},
 });
 

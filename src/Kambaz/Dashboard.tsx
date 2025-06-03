@@ -24,7 +24,7 @@ export default function Dashboard(
     const dispatch = useDispatch();
 
     const {courses, currentCourse} = useSelector((state: any) => state.coursesReducer);
-    const { enrollments } = db;
+    //const { enrollments } = db;
 
     const [showAllCourses, setShowAllCourses] = useState(false);
     const [userEnrollments, setUserEnrollments] = useState<string[]>([]);
@@ -125,15 +125,9 @@ export default function Dashboard(
                 </h2> <hr />
             <div id="wd-dashboard-courses">
                 <Row xs={1} md={5} className="g-4"> 
-                    {courses
-                    .filter((course: any) => enrollments.some(
-                        (enrollment: any) =>
-                            enrollment.user === currentUser._id
-                            && enrollment.course === course._id
-                        ))
-
-                    .map((course: any) => (
-                    <Col className="wd-dashboard-course" style={{ width: "300px" }}>
+                    {displayedCourses.map((course: any) => (
+                    
+                    <Col key={course._id} className="wd-dashboard-course" style={{ width: "300px" }}>
                         <Card>
                             <Link to={`/Kambaz/Courses/${course._id}/Home`} 
                                 className="wd-dashboard-course-link text-decoration-none text-dark">
