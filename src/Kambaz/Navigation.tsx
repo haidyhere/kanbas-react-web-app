@@ -5,9 +5,12 @@ import { LiaBookSolid, LiaCogSolid } from "react-icons/lia";
 import { FaInbox, FaRegCircleUser } from "react-icons/fa6";
 import { ListGroup } from "react-bootstrap";
 import { BiHelpCircle } from "react-icons/bi";
+import { useSelector } from "react-redux";
 
 export default function KambazNavigation() {
     const { pathname } = useLocation();
+    const { currentUser } = useSelector((state: any) => state.accountReducer);
+    
     const links = [
         { label: "Dashboard", path: "/Kambaz/Dashboard", icon: AiOutlineDashboard },
         { label: "Courses", path: "/Kambaz/Dashboard", icon: LiaBookSolid },
@@ -24,7 +27,9 @@ export default function KambazNavigation() {
                     href="https://www.northeastern.edu/" className="bg-black border-0 text-center">
                         <img src="/images/NEU.png" width="75px" /></ListGroup.Item>
                 
-                <ListGroup.Item as={Link} to="/Kambaz/Account" className={`text-center border-0 bg-black 
+                <ListGroup.Item 
+                as={Link} to={`/Kambaz/Account/${currentUser ? 'Profile' : 'Signin'}`} 
+                className={`text-center border-0 bg-black 
                     ${pathname.includes("Account") ? "bg-white text-danger" : "bg-black text-white"}`}> 
                     <FaRegCircleUser className={`fs-1 ${pathname.includes("Account") ? "text-danger" : "text-white"}`} /> 
                     <br />
