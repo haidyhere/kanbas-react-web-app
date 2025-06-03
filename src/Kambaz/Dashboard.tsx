@@ -1,9 +1,10 @@
 import { Button, Card, Col, Row } from "react-bootstrap";
-import { Link } from "react-router-dom";
+//import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import * as db from "./Database";
 import { addCourse, deleteCourse, updateCourse, setCourse } from "./Courses/reducer";
 import { useEffect, useState } from "react";
+import ProtectedLink from "./ProtectedLink";
 
 
 export default function Dashboard(
@@ -129,7 +130,11 @@ export default function Dashboard(
                     
                     <Col key={course._id} className="wd-dashboard-course" style={{ width: "300px" }}>
                         <Card>
-                            <Link to={`/Kambaz/Courses/${course._id}/Home`} 
+
+                           
+                            <ProtectedLink to={`/Kambaz/Courses/${course._id}/Home`} 
+                                courseId={course._id}
+                                userEnrollments={userEnrollments}
                                 className="wd-dashboard-course-link text-decoration-none text-dark">
                             <Card.Img variant="top" src="/images/reactjs.jpg" width="100%" height={160} />
                             <Card.Body className="card-body">
@@ -137,8 +142,9 @@ export default function Dashboard(
                                 <Card.Text className="wd-dashboard-course-description overflow-hidden" style={{ height: "100px" }}>
                                     {course.description}
                                 </Card.Text>
+                                
                                 <Button variant="primary">Go</Button>
-
+                                
                             <div>  
                                 {isEnrolledIn(course._id) ? (
                                                     <Button 
@@ -186,7 +192,7 @@ export default function Dashboard(
 
                             </Card.Body>
                             
-                            </Link>
+                            </ProtectedLink>
                         </Card>
                     </Col>
                     ))}
