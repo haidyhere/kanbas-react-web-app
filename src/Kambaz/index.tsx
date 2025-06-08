@@ -7,6 +7,7 @@ import "./styles.css";
 //import { useState } from "react";
 //import * as db from "./Database";
 import ProtectedRoute from "./Account/ProtectedRoute";
+import Session from "./Account/Session";
 
 export default function Kambaz() {
   {/*}
@@ -40,6 +41,7 @@ export default function Kambaz() {
               */}
 
     return (
+      <Session>
         <div id="wd-kambaz">   
             <KambazNavigation />
             <div className="wd-main-content-offset p-3">
@@ -73,11 +75,8 @@ export default function Kambaz() {
                         <Route path="/Inbox" element={<h1>Inbox</h1>} />
                         <Route path="/Help" element={<h1>Help</h1>} />
                     </Routes>
-            </div>
-            
-            
-
-                
+            </div>       
         </div>
+      </Session>
     );
 }
