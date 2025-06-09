@@ -10,9 +10,9 @@ import ProtectedRoute from "./Account/ProtectedRoute";
 import Session from "./Account/Session";
 import * as userClient from "./Account/client";
 import { useSelector, useDispatch } from "react-redux";
-import { setCourses, addCourse, deleteCourse, updateCourse } from "./Courses/reducer";
+import { setCourses } from "./Courses/reducer";
 //import { v4 as uuidv4 } from "uuid";
-import * as courseClient from "./Courses/client";
+//import * as courseClient from "./Courses/client";
 
 
 export default function Kambaz() {
@@ -30,6 +30,7 @@ export default function Kambaz() {
         console.error(error); 
       } 
     }; 
+    /*
     const addNewCourse = async (course: any) => {
       await userClient.createCourse(course);
       dispatch(addCourse( course));
@@ -43,7 +44,7 @@ export default function Kambaz() {
       await courseClient.updateCourse(course);
       dispatch(updateCourse(course));
     };
-
+*/
     useEffect(() => { 
       fetchCourses(); 
     }, [currentUser]);
@@ -61,9 +62,7 @@ export default function Kambaz() {
                         <Route path="/Dashboard" element= {
                           <ProtectedRoute>
                             <Dashboard 
-                              addNewCourse={addNewCourse}
-                              removeCourse={removeCourse}
-                              saveCourse={saveCourse}
+                              
                             /* courses={courses}
                               course={course} 
                               setCourse={setCourse}

@@ -134,11 +134,14 @@ import { createSlice } from "@reduxjs/toolkit";
         setCourses: (state, action) => {
             state.courses = action.payload;
         },
+        setCurrentCourse: (state, action) => {
+            state.currentCourse = action.payload;
+        },
 
     },
 });
 
-export const { addCourse, deleteCourse, updateCourse, editCourse, setCourses,
+export const { addCourse, deleteCourse, updateCourse, editCourse, setCourses, setCurrentCourse
   
  } =
   coursesSlice.actions;
