@@ -6,8 +6,11 @@ import { useParams } from "react-router";
 //import * as db from "../../Database";
 import ModuleControlButtons from "./ModuleControlButtons";
 import { useState } from "react";
-import { addModule, editModule, updateModule, deleteModule } from "./reducer";
+import { setModules, addModule, editModule, updateModule, deleteModule } from "./reducer";
 import { useSelector, useDispatch } from "react-redux";
+import * as coursesClient from "../client";
+import { useEffect } from "react";
+import * as modulesClient from "./client";
 
 export  default function Modules() {
 
@@ -18,86 +21,86 @@ export  default function Modules() {
         (state: any) => state.modulesReducer);
     const dispatch = useDispatch();
 
+    const saveModule = async (module: any) => { 
+        await modulesClient.updateModule(module); 
+        dispatch(updateModule(module)); 
+    };
+
+    const removeModule = async (moduleId: string) => { 
+        await modulesClient.deleteModule(moduleId); 
+        dispatch(deleteModule(moduleId)); 
+    };
+    const createModuleForCourse = async () => { 
+        if (!cid) return; 
+        const newModule = { name: moduleName, course: cid }; 
+        const module = await coursesClient.createModuleForCourse(cid, newModule); 
+        dispatch(addModule(module)); 
+    };
+
     const { currentUser } = useSelector((state: any) => state.accountReducer);
     const isFaculty = currentUser?.role === "FACULTY";
-
-{/*
-    const addModule = () => {
-        setModules([ ...modules, { _id: new Date().getTime().toString(),
-                    name: moduleName, course: cid, lessons: [] } ]);
-        setModuleName("");
-  };
-    const deleteModule = (moduleId: string) => {
-    setModules(modules.filter((m) => m._id !== moduleId));
-  };
-    const editModule = (moduleId: string) => {
-    setModules(modules.map((m) => (m._id === moduleId ?
-      { ...m, editing: true } : m)));
-  };
-    const updateModule = (module: any) => {
-    setModules(modules.map((m) => (m._id === module._id ?
-      module : m)));
-  };*/}
+    const fetchModules = async () => { 
+        const modules = await coursesClient.findModulesForCourse(cid as string); 
+        dispatch(setModules(modules)); 
+    }; 
+    useEffect(() => { 
+        fetchModules(); }, []);
 
     
     return (
-        <div>
-            {isFaculty && (
-            <ModulesControls 
-                setModuleName={setModuleName}
-                moduleName={moduleName} 
-                addModule={() => {
-                    dispatch(addModule({
-                    name: moduleName, course: cid }));
-                    setModuleName("");}}
+      <div>
+        {isFaculty && (
+          <ModulesControls 
+            setModuleName={setModuleName}
+            moduleName={moduleName} 
+            addModule ={createModuleForCourse}
 
-                />
-            )}
-                <br /><br /><br /><br />
-            <ListGroup className="rounded-0" id="wd-modules">
-                {modules
-                    .filter((module: any) => module.course === cid)
-                    .map((module: any) => (
-                        <ListGroup.Item className="wd-module p-0 mb-5 fs-5 border-gray">
-                        <div className="wd-title p-3 ps-2 bg-secondary">
-                            <BsGripVertical className="me-2 fs-3" /> 
+          />
+        )}
+        <br /><br /><br /><br />
+        <ListGroup className="rounded-0" id="wd-modules">
+          {modules
+                    //.filter((module: any) => module.course === cid)
+            .map((module: any) => (
+              <ListGroup.Item className="wd-module p-0 mb-5 fs-5 border-gray">
+                <div className="wd-title p-3 ps-2 bg-secondary">
+                  <BsGripVertical className="me-2 fs-3" /> 
 
-                            {!module.editing && module.name}
-                                { isFaculty && module.editing && (
-                                <input className="form-control w-50 d-inline-block"
-                                    onChange={(e) => dispatch(updateModule(
-                                        { ...module, name: e.target.value }))}
-                                    onKeyDown={(e) => {
-                                        if (e.key === "Enter") {
-                                        dispatch(updateModule({ ...module, editing: false }));
-                                        }
-                                    }}
-                                    defaultValue={module.name}/>
-                                )}
+                    {!module.editing && module.name}
+                      { isFaculty && module.editing && (
+                        <input className="form-control w-50 d-inline-block"
+                          onChange={(e) => dispatch(updateModule(
+                            { ...module, name: e.target.value }))}
+                          onKeyDown={(e) => {
+                            if (e.key === "Enter") {
+                              saveModule({ ...module, editing: false });
+                              //dispatch(updateModule({ ...module, editing: false }));
+                            }
+                          }}
+                            defaultValue={module.name}/>
+                      )}
                         {isFaculty && (
-                            <ModuleControlButtons moduleId={module._id}
-                                deleteModule={(moduleId) => {dispatch(deleteModule(moduleId));}}
-                                editModule={(moduleId) => dispatch(editModule(moduleId))} 
-                                />
+                          <ModuleControlButtons moduleId={module._id}
+                            deleteModule={(moduleId) => removeModule(moduleId)}
+                            editModule={(moduleId) => dispatch(editModule(moduleId))} 
+                          />
                         )}
                         
                             
-                        </div>
-                        {module.lessons && (
-                            <ListGroup className="wd-lessons rounded-0">
-                                {module.lessons.map((lesson: any) => (
-                                    <ListGroup.Item className="wd-lesson p-3 ps-1">
-                                        <BsGripVertical className="me-2 fs-3" />{lesson.name} <LessonControlButtons />
-                                    </ListGroup.Item>
-                                ))}
-                            
-                                
-                            </ListGroup>
-                        )}
-                        </ListGroup.Item>
-                ))}
-            </ListGroup>
+                </div>
+              {module.lessons && (
+                <ListGroup className="wd-lessons rounded-0">
+                  {module.lessons.map((lesson: any) => (
+                    <ListGroup.Item className="wd-lesson p-3 ps-1">
+                    <BsGripVertical className="me-2 fs-3" />{lesson.name} <LessonControlButtons />
+                    </ListGroup.Item>
+                  ))}
+                </ListGroup>
+              )}
+            </ListGroup.Item>
+          ))}
+        </ListGroup>
 
-        </div>
+      </div>
     );
 }

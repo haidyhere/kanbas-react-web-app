@@ -4,41 +4,50 @@ import Dashboard from "./Dashboard";
 import KambazNavigation from "./Navigation";
 import Courses from "./Courses";
 import "./styles.css";
-//import { useState } from "react";
+import { useEffect } from "react";
 //import * as db from "./Database";
 import ProtectedRoute from "./Account/ProtectedRoute";
 import Session from "./Account/Session";
+import * as userClient from "./Account/client";
+import { useSelector, useDispatch } from "react-redux";
+import { setCourses, addCourse, deleteCourse, updateCourse } from "./Courses/reducer";
+//import { v4 as uuidv4 } from "uuid";
+import * as courseClient from "./Courses/client";
+
 
 export default function Kambaz() {
-  {/*}
-    const [courses, setCourses] = useState<any[]>(db.courses);
-        const [course, setCourse]  = useState<any>({
-        _id: "0", name: "New Course", number: "New Number",
-        startDate: "2025-09-10", endDate: "2025-12-15",
-        image: "/images/reactjs.jpg",
-        description: "New Description"
-        });
+    const dispatch = useDispatch();
+    //const [courses, setCourses] = useState<any[]>([]);
     
-        const addNewCourse = () => {
-        const newCourse = { ...course,
-          _id: new Date().getTime().toString() };
-        setCourses([ ...courses, newCourse ]);
-        };
-        const deleteCourse = (courseId: string) => {
-        setCourses(courses.filter(
-          (course) => course._id !== courseId));
-        };
     
-        const updateCourse = () => {
-        setCourses(
-          courses.map((c) => {
-            if (c._id === course._id) {
-              return course;
-            } else {
-              return c;
-            }
-          })    );  };
-              */}
+    const { currentUser } = useSelector((state: any) => state.accountReducer); 
+     
+
+    const fetchCourses = async () => { 
+      try { const courses = await userClient.findMyCourses(); 
+        dispatch(setCourses(courses)); 
+      } catch (error) { 
+        console.error(error); 
+      } 
+    }; 
+    const addNewCourse = async (course: any) => {
+      await userClient.createCourse(course);
+      dispatch(addCourse( course));
+    };
+    const removeCourse = async (courseId: string) => { 
+       await courseClient.deleteCourse(courseId); 
+       dispatch(deleteCourse(courseId));
+    };
+
+    const saveCourse = async (course: any) => { 
+      await courseClient.updateCourse(course);
+      dispatch(updateCourse(course));
+    };
+
+    useEffect(() => { 
+      fetchCourses(); 
+    }, [currentUser]);
+  
 
     return (
       <Session>
@@ -52,12 +61,15 @@ export default function Kambaz() {
                         <Route path="/Dashboard" element= {
                           <ProtectedRoute>
                             <Dashboard 
-                            /*courses={courses}
-                                course={course}
-                                setCourse={setCourse}
-                                addNewCourse={addNewCourse}
-                                deleteCourse={deleteCourse}
-                                updateCourse={updateCourse}
+                              addNewCourse={addNewCourse}
+                              removeCourse={removeCourse}
+                              saveCourse={saveCourse}
+                            /* courses={courses}
+                              course={course} 
+                              setCourse={setCourse}
+                              
+                              deleteCourse={deleteCourse}
+                              updateCourse={updateCourse}
                                 */
                                 />
                           </ProtectedRoute>
@@ -66,8 +78,7 @@ export default function Kambaz() {
                         <Route path="/Courses/:cid/*" element={
                           <ProtectedRoute>
                             <Courses 
-                           /* courses={courses}
-                            */
+                            //courses={courses}
                             />
                           </ProtectedRoute>} />
 

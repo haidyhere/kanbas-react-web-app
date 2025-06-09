@@ -9,8 +9,8 @@ import PeopleTable from "./People/Table";
 import { useSelector } from "react-redux";
 
 export default function Courses(
-    {/*{ courses }: { courses: any[]; }
-        */}
+    /*{ courses }: { courses: any[]; }*/
+        
 ) {
     const { cid } = useParams();
 

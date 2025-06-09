@@ -1,26 +1,27 @@
 import { Button, Card, Col, Row } from "react-bootstrap";
 //import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import * as db from "./Database";
-import { addCourse, deleteCourse, updateCourse, setCourse } from "./Courses/reducer";
+//import * as db from "./Database";
+import { addCourse, deleteCourse, updateCourse, setCourses } from "./Courses/reducer";
 import { useEffect, useState } from "react";
 import ProtectedLink from "./ProtectedLink";
-
+import * as enrollmentsClient from "./Enrollments/client";
+import {setEnrollments, addEnrollment, removeEnrollment } from "./Enrollments/reducer";
+import * as coursesClient from "./Courses/client";
+//import { v4 as uuidv4 } from "uuid";
 
 export default function Dashboard(
-    {/*{
-    courses, course, setCourse, addNewCourse, deleteCourse, updateCourse 
-    }: {
-  courses: any[]; 
-  course: any; 
-  setCourse: (course: any) => void;
-  addNewCourse: () => void; 
-  deleteCourse: (course: any) => void;
-  updateCourse: () => void; }
-  */}
-)
-    
+   
+
+) 
  {
+     
+    //const [courses, setCourses] = useState<any[]>(db.courses);
+    //const [course, setCourse] = useState<any>({ _id: "0", name: "New Course", number: "New Number", startDate: "2023-09-10", endDate: "2023-12-15", image: "/images/reactjs.jpg", description: "New Description" }); 
+   // const addNewCourse = () => { const newCourse = { ...course, _id: uuidv4() }; setCourses([...courses, newCourse ]); };
+    //const deleteCourse = (courseId: string) => { setCourses(courses.filter((course) => course._id !== courseId)); };
+    //const updateCourse = () => { setCourses( courses.map((c) => { if (c._id === course._id) { return course; } else { return c; } }) ); };
+
     const { currentUser } = useSelector((state: any) => state.accountReducer);
     const dispatch = useDispatch();
 
@@ -28,12 +29,22 @@ export default function Dashboard(
     //const { enrollments } = db;
 
     const [showAllCourses, setShowAllCourses] = useState(false);
-    const [userEnrollments, setUserEnrollments] = useState<string[]>([]);
-    
+    //const [userEnrollments, setUserEnrollments] = useState<string[]>([]);
+    const { enrollments } = useSelector((state:any)=>state.enrollmentsReducer);
+    const userEnrollments = enrollments.map((e:any)=>e.course);
     const isFaculty = currentUser?.role === "FACULTY";
 
     useEffect(() => {
-        if (currentUser?._id) {
+        (async () => {
+    const data = await coursesClient.findAllCourses();
+    dispatch(setCourses(data));
+  })();
+        if (!currentUser?._id) return;
+            (async () => {
+                const data = await enrollmentsClient.findEnrollmentsByUser(currentUser._id);
+    dispatch(setEnrollments(data));
+        })();
+            /*{
             const saved = localStorage.getItem(`enrollments_${currentUser._id}`);
             if (saved) {
                 setUserEnrollments(JSON.parse(saved));
@@ -44,13 +55,14 @@ export default function Dashboard(
                 setUserEnrollments(initialEnrollments);
                 localStorage.setItem(`enrollments_${currentUser._id}`, JSON.stringify(initialEnrollments));
             }
-        }
-    }, [currentUser?._id]);
-
+        }*/
+    }, [currentUser?._id, dispatch]);
+/*
     const saveEnrollments = (enrollments: string[]) => {
         localStorage.setItem(`enrollments_${currentUser._id}`, JSON.stringify(enrollments));
         setUserEnrollments(enrollments);
     };
+    */
     const isEnrolledIn = (courseId: string) => {
         return userEnrollments.includes(courseId);
     };
@@ -58,10 +70,11 @@ export default function Dashboard(
         ? courses 
         : courses.filter((course: any) => isEnrolledIn(course._id));
     
-    const addNewCourse = () => {
+    const addNewCourse = async () => {
         dispatch(addCourse(currentCourse));
         
     }
+    /*
     const handleDeleteCourse = (courseId: string) => {
         dispatch(deleteCourse(courseId));
         if (isEnrolledIn(courseId)) {
@@ -69,22 +82,36 @@ export default function Dashboard(
             saveEnrollments(newEnrollments);
         }
     };
+    */
+   const handleDeleteCourse = (courseId: string) => {
+    dispatch(deleteCourse(courseId));
+    if (isEnrolledIn(courseId)) {
+        dispatch(removeEnrollment(courseId));
+        enrollmentsClient.unenrollCourse(currentUser._id, courseId);
+
+    }
+};
+
     const handleUpdateCourse = () => {
         dispatch(updateCourse(currentCourse));
     };
-    const handleSetCourse = (course: any) => {
-        dispatch(setCourse(course));
+    const handleSetCourses = (course: any) => {
+        dispatch(setCourses(course));
     }
     const handleCourseChange = (field: string, value: any) => {
-        dispatch(setCourse({ ...currentCourse, [field]: value }));
+        dispatch(setCourses({ ...currentCourse, [field]: value }));
     };
-    const handleEnroll = (courseId: string) => {
-        const newEnrollments = [...userEnrollments, courseId];
-        saveEnrollments(newEnrollments);
+    const handleEnroll = async (courseId: string) => {
+        //const newEnrollments = [...userEnrollments, courseId];
+        //saveEnrollments(newEnrollments);
+        const data = await enrollmentsClient.enrollCourse(currentUser._id, courseId);
+        dispatch(addEnrollment(data));
     };
-    const handleUnenroll = (courseId: string) => {
-        const newEnrollments = userEnrollments.filter(id => id !== courseId);
-        saveEnrollments(newEnrollments);
+    const handleUnenroll = async (courseId: string) => {
+        //const newEnrollments = userEnrollments.filter(id => id !== courseId);
+        //saveEnrollments(newEnrollments);
+        await enrollmentsClient.unenrollCourse(currentUser._id, courseId);
+        dispatch(removeEnrollment(courseId));
     };
 
     return (
@@ -181,7 +208,7 @@ export default function Dashboard(
                                 <Button id="wd-edit-course-click" variant="warning"
                                     onClick={(event) => {
                                         event.preventDefault();
-                                        handleSetCourse(course);
+                                        handleSetCourses(course);
                                     }}
                                     className="me-2 float-end" >
                                     Edit
@@ -209,8 +236,4 @@ export default function Dashboard(
         
     );
 }
-{/*}
-function dispatch(arg0: { payload: any; type: "courses/addCourse"; }) {
-    throw new Error("Function not implemented.");
-}
-    */}
+

@@ -7,7 +7,9 @@ import { LuNotebookPen } from "react-icons/lu";
 import { useParams, Link } from "react-router";
 import { useNavigate } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
-import { deleteAssignment } from "./reducer";
+import { setAssignments, deleteAssignment as deleteAssignmentAction } from "./reducer";
+import * as assignmentsClient from "./client";
+import { useEffect } from "react";
 
 export default function Assignments() {
     const { cid } = useParams();
@@ -18,10 +20,12 @@ export default function Assignments() {
     const filteredAssignments = assignments.filter((assignment: any) => assignment.course === cid);
     const { currentUser } = useSelector((state: any) => state.accountReducer);
     const isFaculty = currentUser?.role === "FACULTY";
-
+/*
     const handleDeleteAssignment = (assignmentId: string) => {
         dispatch(deleteAssignment(assignmentId));
     };
+    */
+  
 
     const formatDate = (dateString: string | number | Date, isAvailable = false) => {
         const date = new Date(dateString);
@@ -33,7 +37,18 @@ export default function Assignments() {
         const time = isAvailable ? "12:00 AM" : "11:59 PM";
         return `${month} ${day}, ${year} at ${time}`;
     }
-    
+    const handleDeleteAssignment = async (assignmentId: string) => {
+    await assignmentsClient.deleteAssignment(assignmentId);
+    dispatch(deleteAssignmentAction(assignmentId));
+   };
+    useEffect(() => {
+    if (!cid) return;
+    const fetchAssignments = async () => {
+    const data = await assignmentsClient.findAssignmentsForCourse(cid);
+    dispatch(setAssignments(data));
+    };
+    fetchAssignments();
+   }, [cid]);
 
     return (
         <div id="wd-assignments">

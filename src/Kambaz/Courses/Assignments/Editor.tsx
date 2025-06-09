@@ -2,9 +2,9 @@ import { Button, Card, Col, Form, Row } from "react-bootstrap";
 //import * as db from "../../Database"
 import { useParams, Link, useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
-import { addAssignment, updateAssignment } from "./reducer";
+import { addAssignment, updateAssignment as updateAssignmentAction } from "./reducer";
 import { useEffect, useState } from "react";
-
+import * as assignmentsClient from "./client";
 
 export default function AssignmentEditor() {
     const { cid } = useParams();
@@ -42,9 +42,10 @@ export default function AssignmentEditor() {
     
     const dispatch = useDispatch();
     const navigate = useNavigate()
-    const handleSave = () => {
+    const handleSave = async () => {
         const assignmentData = {
-        _id: isEditing ? aid : new Date().getTime().toString(),
+        _id: isEditing ? aid : undefined,
+        //new Date().getTime().toString(),
         title,
         description,
         points,
@@ -53,10 +54,20 @@ export default function AssignmentEditor() {
         availableUntilDate,
         course: cid,
         };
-        if (isEditing) {
-            dispatch(updateAssignment(assignmentData));
+        if (isEditing && aid) {
+            //dispatch(updateAssignment(assignmentData));
+            const updated = await assignmentsClient.updateAssignment({
+            ...assignmentData,
+            _id: aid});
+            dispatch(updateAssignmentAction(updated));
+    
         } else {
-            dispatch(addAssignment(assignmentData));
+            const created = await assignmentsClient.createAssignmentForCourse(
+      cid as string,
+      assignmentData
+    );
+    dispatch(addAssignment(created));
+            //dispatch(addAssignment(assignmentData));
         }
     
         navigate(`/Kambaz/Courses/${cid}/Assignments`);};
