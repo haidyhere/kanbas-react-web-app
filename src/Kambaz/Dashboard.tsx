@@ -108,8 +108,21 @@ export default function Dashboard(
 };
 
     const handleUpdateCourse = async () => {
-         await coursesClient.updateCourse(currentCourse);
+        try {
+        console.log("Current course before update:", currentCourse);
+        
+        if (!currentCourse._id) {
+            console.error("No course ID found");
+            return;
+        }
+        const updatedCourse = await coursesClient.updateCourse(currentCourse);
+        console.log("Course updated successfully:", updatedCourse);
         dispatch(updateCourse(currentCourse));
+        dispatch(updateCourse(updatedCourse));
+    } catch (error) {
+        console.error("Error updating course:", error);
+        alert("Failed to update course. Please check console for details.");
+    }
     };
     const handleSetCourses = (course: any) => {
         dispatch(setCurrentCourse(course));
