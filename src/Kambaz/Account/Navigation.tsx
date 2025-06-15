@@ -7,6 +7,7 @@ export default function AccountNavigation() {
     const { currentUser } = useSelector((state: any) => state.accountReducer);
     const links = currentUser ? ["Profile"]: ["Signin", "Signup"];
     const { pathname } = useLocation();
+    const active = (path: string) => pathname.includes(path) ? "active" : "";
 
     return (
         <ListGroup id="wd-account-navigation" style={{ width: 120 }} className="rounded-0 bottom-0 top-0 d-none d-md-block bg-black z-2 list-group">
@@ -30,15 +31,10 @@ export default function AccountNavigation() {
                     {link === "Signin" ? "Sign In" : link === "Signup" ? "Sign Up" : link}
                 </ListGroup.Item>
             ))}
+            {currentUser && currentUser.role === "ADMIN" && ( 
+                <Link to={`/Kambaz/Account/Users`} className={`list-group-item ${active("Users")}`}> Users </Link> )}
         </ListGroup>
                 
-            /*
-            <ListGroup.Item to={`/Kambaz/Account/Signin`} as={Link} className="text-center border-0 bg-white text-black" style={{ borderLeft: "3px solid black !important" }} action> 
-                Signin</ListGroup.Item>
-            <ListGroup.Item to={`/Kambaz/Account/Signup`} as={Link} className="text-center border-0 bg-white text-danger"> Signup </ListGroup.Item>
-            <ListGroup.Item to={`/Kambaz/Account/Profile`} as={Link} className="text-center border-0 bg-white text-danger"> Profile </ListGroup.Item>
-        </ListGroup>
-            */
         
     );
 }
