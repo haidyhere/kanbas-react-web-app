@@ -21,20 +21,28 @@ export  default function Modules() {
         (state: any) => state.modulesReducer);
     const dispatch = useDispatch();
 
-    const saveModule = async (module: any) => { 
-        await modulesClient.updateModule(module); 
-        dispatch(updateModule(module)); 
-    };
 
-    const removeModule = async (moduleId: string) => { 
+    const deleteModuleHandler = async (moduleId: string) => { 
         await modulesClient.deleteModule(moduleId); 
         dispatch(deleteModule(moduleId)); 
     };
-    const createModuleForCourse = async () => { 
-        if (!cid) return; 
-        const newModule = { name: moduleName, course: cid }; 
-        const module = await coursesClient.createModuleForCourse(cid, newModule); 
-        dispatch(addModule(module)); 
+    //const createModuleForCourse = async () => { 
+      //  if (!cid) return; 
+      //  const newModule = { name: moduleName, course: cid }; 
+      //  const module = await coursesClient.createModuleForCourse(cid, newModule); 
+      //  dispatch(addModule(module)); 
+    //};
+    const addModuleHandler = async () => {
+      const newModule = await coursesClient.createModuleForCourse(cid!, {
+        name: moduleName,
+        course: cid,
+      });
+        dispatch(addModule(newModule));
+        setModuleName("");
+    };
+    const updateModuleHandler = async (module: any) => { 
+      await modulesClient.updateModule(module); 
+      dispatch(updateModule(module)); 
     };
 
     const { currentUser } = useSelector((state: any) => state.accountReducer);
@@ -44,16 +52,19 @@ export  default function Modules() {
         dispatch(setModules(modules)); 
     }; 
     useEffect(() => { 
-        fetchModules(); }, []);
+        fetchModules(); 
+      }
+      , [cid]);
 
     
     return (
       <div>
         {isFaculty && (
           <ModulesControls 
+            
             setModuleName={setModuleName}
             moduleName={moduleName} 
-            addModule ={createModuleForCourse}
+            addModule ={addModuleHandler}
 
           />
         )}
@@ -69,11 +80,12 @@ export  default function Modules() {
                     {!module.editing && module.name}
                       { isFaculty && module.editing && (
                         <input className="form-control w-50 d-inline-block"
-                          onChange={(e) => dispatch(updateModule(
-                            { ...module, name: e.target.value }))}
+                          onChange={(e) => updateModuleHandler
+                            //dispatch(updateModule(
+                            ({ ...module, name: e.target.value })}
                           onKeyDown={(e) => {
                             if (e.key === "Enter") {
-                              saveModule({ ...module, editing: false });
+                              updateModuleHandler({ ...module, editing: false });
                               //dispatch(updateModule({ ...module, editing: false }));
                             }
                           }}
@@ -81,7 +93,7 @@ export  default function Modules() {
                       )}
                         {isFaculty && (
                           <ModuleControlButtons moduleId={module._id}
-                            deleteModule={(moduleId) => removeModule(moduleId)}
+                            deleteModule={(moduleId) => deleteModuleHandler(moduleId)}
                             editModule={(moduleId) => dispatch(editModule(moduleId))} 
                           />
                         )}

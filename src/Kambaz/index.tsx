@@ -4,28 +4,41 @@ import Dashboard from "./Dashboard";
 import KambazNavigation from "./Navigation";
 import Courses from "./Courses";
 import "./styles.css";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 //import * as db from "./Database";
 import ProtectedRoute from "./Account/ProtectedRoute";
 import Session from "./Account/Session";
-import * as userClient from "./Account/client";
-import { useSelector, useDispatch } from "react-redux";
+//import * as userClient from "./Account/client";
+import { useSelector } from "react-redux";
 import { setCourses } from "./Courses/reducer";
 //import { v4 as uuidv4 } from "uuid";
-//import * as courseClient from "./Courses/client";
+import * as courseClient from "./Courses/client";
+import * as userClient from "./Account/client";
 
 
 export default function Kambaz() {
-    const dispatch = useDispatch();
+    //const dispatch = useDispatch();
     //const [courses, setCourses] = useState<any[]>([]);
     
     
     const { currentUser } = useSelector((state: any) => state.accountReducer); 
-     
+    const [enrolling] = useState<boolean>(false); 
+    const findCoursesForUser = async () => { 
+      try { const courses = await userClient.findCoursesForUser(currentUser._id);  
+        setCourses(courses); 
+      } catch (error) { console.error(error); } };
 
     const fetchCourses = async () => { 
-      try { const courses = await userClient.findMyCourses(); 
-        dispatch(setCourses(courses)); 
+      try { 
+        const allCourses = await courseClient.fetchAllCourses();
+        const enrolledCourses = await userClient.findCoursesForUser( currentUser._id ); 
+        const courses = allCourses.map((course: any) => { 
+          if (enrolledCourses.find((c: any) => c._id === course._id)) { 
+            return { ...course, enrolled: true }; 
+          } else { return course; 
+          }
+        });
+        setCourses(courses);
       } catch (error) { 
         console.error(error); 
       } 
@@ -46,8 +59,12 @@ export default function Kambaz() {
     };
 */
     useEffect(() => { 
+      if (enrolling) {
       fetchCourses(); 
-    }, [currentUser]);
+      } else {
+        findCoursesForUser();
+      }
+    }, [currentUser, enrolling]);
   
 
     return (
