@@ -13,11 +13,8 @@ export default function Signin() {
     const navigate = useNavigate();
     const signin = async () => {
         const user = await client.signin(credentials);
-        {/*}
-    const user = db.users.find(
-      (u: any) => u.username === credentials.username &&
-                  u.password === credentials.password);
-        */}
+        const profile = await client.profile();
+        console.log("PROFILE FROM SESSION:", profile);
     if (!user) return;
     dispatch(setCurrentUser(user));
     navigate("/Kambaz/Dashboard");};
